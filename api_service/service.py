@@ -1,6 +1,7 @@
 import cherrypy
 from job import Job
 from job_status import JobStatus
+from typing import Union
 
 class Service(object):
     def __init__(self):
@@ -43,7 +44,7 @@ class Service(object):
     def _list_jobs(self) -> list[Job]:
         pass
 
-    def _get_job_output_file_id(self, job_id: str) -> str | None:
+    def _get_job_output_file_id(self, job_id: str) -> Union[str, None]:
         pass
 
 if __name__ == '__main__':
