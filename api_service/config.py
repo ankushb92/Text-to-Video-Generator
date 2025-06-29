@@ -1,3 +1,3 @@
-REDIS_HOST = 'localhost'
+REDIS_HOST = 'redis-service'
 REDIS_PORT = '6379'
 PENDING_JOBS_QUEUE = 'PENDING_JOBS_QUEUE'
