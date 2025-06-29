@@ -15,7 +15,7 @@ class Data:
     def enqueue_job(self, job: Job) -> None:
         job.update_status(JobStatus.PENDING)
         self.redis_client.rpush(config.PENDING_JOBS_QUEUE, json.dumps(job.get_details_with_job_id()))
-        self.redis_client.hset(job.get_job_id(), key="status", value=JobStatus.PENDING)
+        self.redis_client.hset(job.get_job_id(), key="status", value=JobStatus.PENDING.value)
 
     def get_job_status(self, job_id: str) -> JobStatus:
         return JobStatus(self.redis_client.hget(name=job_id, key="status"))
