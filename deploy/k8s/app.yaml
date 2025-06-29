@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mochi-app
 data:
-  api_service_port: "80"
+  api_service_port: "30000"
 ---
 apiVersion: apps/v1
 kind: Deployment
