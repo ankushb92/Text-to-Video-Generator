@@ -17,7 +17,7 @@ for service_dir in "$ROOT_DIR"/*/; do
     build_context="$PROJECT_ROOT"  # This will include api_service
 
     # Build the Docker image and tag it with the service name
-    docker build -t "$service_name" -f "$service_dir/Dockerfile" "$build_context" || {
+    docker build --platform linux/amd64 -t "$service_name" -f "$service_dir/Dockerfile" "$build_context" || {
       echo "Failed to build Docker image for $service_name"
       continue
     }
