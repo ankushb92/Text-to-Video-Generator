@@ -28,8 +28,8 @@ spec:
     spec:
       containers:
         - name: api-service
-          image: api_service:latest
-          imagePullPolicy: IfNotPresent
+          image: docker.io/ankush92/api_service:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           resources:
