@@ -1,0 +1,50 @@
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.counter-section {
+  margin: 20px 0;
+}
+
+.counter-section button {
+  background-color: #61dafb;
+  border: none;
+  color: #282c34;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.counter-section button:hover {
+  background-color: #21a6c7;
+}
+
+.info-section {
+  margin-top: 30px;
+  font-size: 16px;
+  background-color: #404448;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+}
+
+.info-section p {
+  margin: 10px 0;
+}

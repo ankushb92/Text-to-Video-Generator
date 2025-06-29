@@ -115,7 +115,7 @@ for service_dir in "$IMAGES_DIR"/*; do
             
             # Build the Docker image
             print_status "Building $service_name..."
-            if docker build -t "$image_name" -f "$dockerfile_path" "$PROJECT_ROOT"; then
+            if docker build --platform linux/amd64 -t "$image_name" -f "$dockerfile_path" "$PROJECT_ROOT"; then
                 print_success "Built $service_name successfully"
                 
                 # Push the Docker image
