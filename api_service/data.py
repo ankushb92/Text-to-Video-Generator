@@ -18,7 +18,7 @@ class Data:
         self.redis_client.hset(job.get_job_id(), key="status", value=JobStatus.PENDING.value)
 
     def get_job_status(self, job_id: str) -> JobStatus:
-        return JobStatus(self.redis_client.hget(name=job_id, key="status"))
+        return JobStatus(self.redis_client.hget(name=job_id, key="status").decode('utf-8'))
 
     @staticmethod
     def prepare_mapping(mapping) -> dict:
