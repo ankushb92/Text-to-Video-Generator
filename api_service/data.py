@@ -10,7 +10,7 @@ class Data:
         self.redis_client = redis.Redis(host=config.REDIS_HOST, port=config.REDIS_PORT, db=0)
 
     def create_job(self, job: Job) -> None:
-        self.redis_client.hset(job.get_job_id(), mapping=job.get_details())
+        self.redis_client.hset(job.get_job_id(), mapping=self.prepare_mapping(job.get_details()))
 
     def enqueue_job(self, job: Job) -> None:
         job.update_status(JobStatus.PENDING)
@@ -19,3 +19,8 @@ class Data:
 
     def get_job_status(self, job_id: str) -> JobStatus:
         return JobStatus(self.redis_client.hget(name=job_id, key="status"))
+
+    @staticmethod
+    def prepare_mapping(mapping) -> dict:
+        # prepares for adding mapping to redis
+        return {k: int(v) if isinstance(v, bool) else v for k, v in mapping.items()}
