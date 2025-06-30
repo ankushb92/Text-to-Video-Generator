@@ -12,9 +12,20 @@ class Service(object):
     @cherrypy.expose
     @cherrypy.tools.allow(methods=['GET', 'POST'])
     @cherrypy.tools.json_out()
-    def submit_job(self, prompt: str, high_quality: bool = False) -> dict:
+    def submit_job(self, prompt: str) -> dict:
         submitted_at = int(time.time())
-        job = Job(submitted_at, prompt, high_quality)
+        job = Job(submitted_at, prompt)
+        self.data.create_job(job)
+        self.data.enqueue_job(job)
+        return job.get_details_with_job_id()
+
+    @cherrypy.expose
+    @cherrypy.tools.allow(methods=['GET', 'POST'])
+    @cherrypy.tools.json_out()
+    def enhance_job(self, job_id: str):
+        submitted_at = int(time.time())
+        prompt: str = self.data.get_prompt(job_id)
+        job = Job(submitted_at, prompt, enhances_job_id=job_id)
         self.data.create_job(job)
         self.data.enqueue_job(job)
         return job.get_details_with_job_id()
