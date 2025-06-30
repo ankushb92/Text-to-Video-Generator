@@ -1,2 +1,3 @@
 cherrypy
+cherrypy-cors
 redis

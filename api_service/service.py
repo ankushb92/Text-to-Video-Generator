@@ -4,6 +4,7 @@ from job_status import JobStatus
 from data import Data
 from typing import Union
 import time
+import cherrypy_cors
 
 class Service(object):
     def __init__(self):
@@ -39,8 +40,8 @@ class Service(object):
 
     @cherrypy.expose
     @cherrypy.tools.allow(methods=['GET'])
-    def list_jobs(self, start=0, limit=10) -> str:
-        pass
+    def list_jobs(self) -> str:
+        return self.data.list_jobs()
 
     @cherrypy.expose
     @cherrypy.tools.allow(methods=['GET'])
@@ -54,4 +55,10 @@ class Service(object):
         pass
 
 if __name__ == '__main__':
-    cherrypy.quickstart(Service())
+    cherrypy_cors.install()
+    cherrypy.quickstart(Service(), config={
+            '/': {
+                'cors.expose.on': True
+            }
+        }
+    )

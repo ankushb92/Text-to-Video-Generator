@@ -12,6 +12,11 @@ class Data:
     def create_job(self, job: Job) -> None:
         self.redis_client.hset(job.get_job_id(), mapping=self.prepare_mapping(job.get_details()))
 
+    def list_jobs(self) -> list[dict]:
+        keys: list[str] = [k.decode('utf-8') for k in self.redis_client.scan(_type='HASH')]
+        jobs: list[dict] = [{"job_id": key, **self.redis_client.hgetall(key)} for key in keys]
+        return [job for job in jobs if job["status"] == JobStatus.COMPLETED.value]
+
     def enqueue_job(self, job: Job) -> None:
         job.update_status(JobStatus.PENDING)
         self.redis_client.rpush(config.PENDING_JOBS_QUEUE, json.dumps(job.get_details_with_job_id()))
