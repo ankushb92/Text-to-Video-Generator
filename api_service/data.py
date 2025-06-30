@@ -13,9 +13,9 @@ class Data:
         self.redis_client.hset(job.get_job_id(), mapping=self.prepare_mapping(job.get_details()))
 
     def list_jobs(self) -> list[dict]:
-        keys: list[str] = [k.decode('utf-8') for k in self.redis_client.scan(_type='HASH')]
-        jobs: list[dict] = [{"job_id": key, **self.redis_client.hgetall(key)} for key in keys]
-        return [job for job in jobs if job["status"] == JobStatus.COMPLETED.value]
+        return [k.decode('utf-8') for k in self.redis_client.scan_iter(_type='HASH')]
+        # jobs: list[dict] = [{"job_id": key, **self.redis_client.hgetall(key)} for key in keys]
+        # return [job for job in jobs if job["status"] == JobStatus.COMPLETED.value]
 
     def enqueue_job(self, job: Job) -> None:
         job.update_status(JobStatus.PENDING)

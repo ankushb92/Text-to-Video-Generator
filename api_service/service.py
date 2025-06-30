@@ -40,15 +40,14 @@ class Service(object):
 
     @cherrypy.expose
     @cherrypy.tools.allow(methods=['GET'])
-    def list_jobs(self) -> str:
-        return self.data.list_jobs()
+    @cherrypy.tools.json_out()
+    def list_jobs(self) -> list[dict]:
+        cherrypy.log(str(self.data.list_jobs()))
+        return {}
 
     @cherrypy.expose
     @cherrypy.tools.allow(methods=['GET'])
     def get_output_file(self, job_id: str):
-        pass
-
-    def _list_jobs(self) -> list[Job]:
         pass
 
     def _get_job_output_file_id(self, job_id: str) -> Union[str, None]:

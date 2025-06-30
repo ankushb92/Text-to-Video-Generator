@@ -1,0 +1,2 @@
+# genmo @ git+https://github.com/genmoai/mochi.git@main
+httpx
