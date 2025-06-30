@@ -72,7 +72,8 @@ spec:
         configMap:
           name: redis-config
       - name: redis-data
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: redis-pvc  # Use the PVC instead of emptyDir
 
 ---
 apiVersion: v1
@@ -103,3 +104,19 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  storageClassName: ""  # Explicitly set to empty to match PV without StorageClass
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: redis-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""  # Empty to match PVC with no StorageClass
+  hostPath:
+    path: /mnt/redis-data  # Adjust path based on your node's filesystem
