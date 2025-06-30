@@ -1,31 +1,31 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: mochi-app-config
+  name: web-app-config
   labels:
-    app: mochi-app
+    app: web-app
 data:
   api_service_port: "30000"
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mochi-app
+  name: web-app
   labels:
-    app: mochi-app
+    app: web-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mochi-app
+      app: web-app
   template:
     metadata:
       labels:
-        app: mochi-app
+        app: web-app
     spec:
       containers:
-      - name: mochi-app
-        image: docker.io/ankush92/app:latest
+      - name: web-app
+        image: docker.io/ankush92/web_app:latest
         ports:
         - containerPort: 80
         resources:
@@ -51,15 +51,15 @@ spec:
         - name: API_SERVICE_PORT
           valueFrom:
             configMapKeyRef:
-              name: mochi-app-config
+              name: web-app-config
               key: api_service_port
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mochi-app-service
+  name: web-app-service
   labels:
-    app: mochi-app
+    app: web-app
 spec:
   type: ClusterIP
   ports:
@@ -68,4 +68,4 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: mochi-app
+    app: web-app

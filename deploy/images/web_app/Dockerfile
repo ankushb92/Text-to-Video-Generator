@@ -2,15 +2,15 @@
 FROM node:18-alpine as build
 
 # Set working directory
-WORKDIR /app
+WORKDIR /web_app
 
 # Copy package files first for better layer caching
-COPY app/package*.json ./
+COPY web_app/package*.json ./
 
 RUN npm install
 
 # Copy the rest of the app source code
-COPY app .
+COPY web_app .
 
 # Build the app
 RUN npm run build
@@ -19,7 +19,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy built app to nginx html directory
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /web_app/build /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
